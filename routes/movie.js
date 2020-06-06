@@ -62,4 +62,14 @@ router.get('/list/unreleased', async(req, res) => {
         .send(util.success(statusCode.OK, responseMessage.READ_MOVIE_RELEASE_SUCCESS, result));
 });
 
+/**
+ * 영화 썸네일 배너
+ */
+router.get('/thumbs/:movie_idx', async(req, res) => {
+    const movie_id = req.params.movie_idx;
+    const result = await Movie.getMovieThumbnails(movie_id);
+    return res.status(statusCode.OK)
+        .send(util.success(statusCode.OK, responseMessage.READ_MOVIE_SUCCESS, result));
+})
+
 module.exports = router;
