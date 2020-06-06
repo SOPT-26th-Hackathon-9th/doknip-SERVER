@@ -12,7 +12,7 @@ router.get('/reserved/:id', async(req, res) => {
     // request params 에서 데이터 가져오기
     const id = req.params.id;
 
-    const result = Movie.getMovieReserved(id);
+    const result = await Movie.getMovieReserved(id);
     if (!id){
         return res.status(statusCode.BAD_REQUEST)
             .send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
@@ -33,9 +33,9 @@ router.get('/info/:movie_idx', async(req, res) => {
         return res.status(statusCode.BAD_REQUEST)
             .send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
     }
-
-    const result = await Movie.getMovieInfo(movie_id);
+    
     const characInfo = await Movie.getCharacterInfo(movie_id);
+    const result = await Movie.getMovieInfo(movie_id);
 
     
     return res.status(statusCode.OK)
