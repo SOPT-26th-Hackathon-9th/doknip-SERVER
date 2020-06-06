@@ -5,26 +5,21 @@ const responseMessage = require('../modules/responseMessage');
 const util = require('../modules/util');
 const Movie = require('../models/movie');
 
-router.get('/', function(req, res, next){
-    res.send("독립 영화");
-});
-
 /**
  * 내가 예약한 영화
  */
-router.get('/like/:id', async(req, res) => {
+router.get('/reserved/:id', async(req, res) => {
     // request params 에서 데이터 가져오기
     const id = req.params.id;
 
-    res.send('내가 예약한 영화');
-});
+    const result = Movie.getMovieReserved(id);
+    if (!id){
+        return res.status(statusCode.BAD_REQUEST)
+            .send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+    }
 
-
-/**
- * 상영 예정 + 상영 중 영화
- */
-router.get('/release', async(req, res) => {
-    res.send('상영 예정인 영화, 상영 중인 영화');
+    return res.status(statusCode.OK)
+        .send(util.success(statusCode.OK, responseMessage.READ_MOVIE_INFO_SUCCESS, result));
 });
 
 /**
@@ -40,10 +35,32 @@ router.get('/info/:movie_idx', async(req, res) => {
     }
 
     const result = await Movie.getMovieInfo(movie_id);
+    const characInfo = await Movie.getCharacterInfo(movie_id);
+
+    
     return res.status(statusCode.OK)
-        .send(util.success(statusCode.OK, responseMessage.READ_MOVIE_INFO_SUCCESS, responseMessage.READ_MOVIE_INFO_SUCCESS, result));
+        .send(util.success(statusCode.OK, responseMessage.READ_MOVIE_INFO_SUCCESS,{result, characInfo}));
 
 });
+
+/**
+ * 상영 중 영화
+ */
+router.get('/list/released', async(req, res) => {
+    const result = await Movie.getMovieReleased();
+    return res.status(statusCode.OK)
+        .send(util.success(statusCode.OK, responseMessage.READ_MOVIE_RELEASE_SUCCESS, result));
+});
+
+/**
+ * 상영 예정 영화
+ */
+router.get('/list/unreleased', async(req, res) => {
+    const result = await Movie.getMovieUnreleased();
+    return res.status(statusCode.OK)
+        .send(util.success(statusCode.OK, responseMessage.READ_MOVIE_RELEASE_SUCCESS, result));
+});
+
 
 /**
  * 비슷한 영화 추천
@@ -52,7 +69,9 @@ router.get('/list/:genreCode', async(req, res) => {
     // request params 에서 데이터 가져오기
     const genre = req.params.genreCode;
 
-    res.send('비슷한 영화');
+    const result = await Movie.getMoviesByGenre(genre);
+    return res.status(statusCode.OK)
+        .send(util.success(statusCode.OK, responseMessage.READ_MOVIE_SUCCESS, result));
 });
 
 module.exports = router;

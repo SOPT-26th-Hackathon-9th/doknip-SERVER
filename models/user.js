@@ -3,7 +3,7 @@ const table = 'user';
 
 const user = {
     getUserInfo : async (userIdx) => {
-        const query = `select * from ${table} where user_idx = ${userIdx}`;
+        const query = `select * from ${table} where userIdx = ${userIdx}`;
         try{
             return await pool.queryParam(query);
         } catch(err){
