@@ -55,6 +55,15 @@ const movie = {
             console.log('getMoviesByGenre err : ', err);
             throw err;
         }
+    },
+    getMovieThumbnails : async(movieIdx) => {
+        const query = `select * from movieThumbnail where movieIdx=${movieIdx};`;
+        try{
+            return await pool.queryParam(query);
+        } catch (err){
+            console.log('getMoviesByGenre err : ', err);
+            throw err;
+        }
     }
 }
 
