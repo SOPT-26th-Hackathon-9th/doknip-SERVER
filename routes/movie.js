@@ -33,13 +33,14 @@ router.get('/info/:movie_idx', async(req, res) => {
         return res.status(statusCode.BAD_REQUEST)
             .send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
     }
-    
+
     const characInfo = await Movie.getCharacterInfo(movie_id);
     const result = await Movie.getMovieInfo(movie_id);
+    const genre = await Movie.getMoviesByGenre(result[0]["genre"])
 
     
     return res.status(statusCode.OK)
-        .send(util.success(statusCode.OK, responseMessage.READ_MOVIE_INFO_SUCCESS,{result, characInfo}));
+        .send(util.success(statusCode.OK, responseMessage.READ_MOVIE_INFO_SUCCESS,{result, characInfo, genre}));
 
 });
 
@@ -59,19 +60,6 @@ router.get('/list/unreleased', async(req, res) => {
     const result = await Movie.getMovieUnreleased();
     return res.status(statusCode.OK)
         .send(util.success(statusCode.OK, responseMessage.READ_MOVIE_RELEASE_SUCCESS, result));
-});
-
-
-/**
- * 비슷한 영화 추천
- */
-router.get('/list/:genreCode', async(req, res) => {
-    // request params 에서 데이터 가져오기
-    const genre = req.params.genreCode;
-
-    const result = await Movie.getMoviesByGenre(genre);
-    return res.status(statusCode.OK)
-        .send(util.success(statusCode.OK, responseMessage.READ_MOVIE_SUCCESS, result));
 });
 
 module.exports = router;
