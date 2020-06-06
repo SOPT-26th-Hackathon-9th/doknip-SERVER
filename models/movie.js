@@ -3,7 +3,7 @@ const table = 'movie';
 
 const movie = {
     getMovieReserved : async(userIdx) => {
-        const query = `select movieIdx, movieName, movieImg, release_flag from ${table} where movieIdx in (select movieIdx from reserve where userIdx=${userIdx})`
+        const query = `select movieIdx, movieName, movieImg, release_flag, schedule from ${table} where movieIdx in (select movieIdx from reserve where userIdx=${userIdx}) order by (curdate() - schedule) desc`
         try{
             return await pool.queryParam(query);
         } catch (err){
