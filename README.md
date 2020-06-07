@@ -4,21 +4,20 @@ __SOPT 26기 서버파트 솝커톤 - 비대면 해커톤__
 <img src="https://user-images.githubusercontent.com/37169252/83969816-0a422f00-a90d-11ea-9de7-1e77f80feba8.png" width= "900">
 
 <br/>
-<br/>
 
-### 1️⃣  API 명세서
+### 📄  API 명세서
 🔗 [참고해주세요!](https://github.com/SOPT-26th-Hackathon-9th/doknip-SERVER/wiki)  
 
 <br/>
 <br/>
 
-### 2️⃣ 데이터 구조 ERD
+### 🗃 데이터 구조 ERD
 <img src="https://user-images.githubusercontent.com/37169252/83955975-a62f5480-a893-11ea-8e76-10d033c67046.png" width= "650">
 
 <br/>
 <br/>
 
-### 3️⃣ API - EC2 테스트
+### 🤖 API - EC2 테스트
 <img width="1000" alt="스크린샷 2020-06-07 오전 7 38 40" src="https://user-images.githubusercontent.com/37169252/83969800-f39bd800-a90c-11ea-818b-7cfbf193c5f4.png">
 
 <br/>
